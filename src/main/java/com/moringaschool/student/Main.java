@@ -21,7 +21,7 @@ public class Main {
        get("/hello",(request, response)->{
            HandlebarsTemplateEngine template = new HandlebarsTemplateEngine();
            Map<String, Object> payload = new HashMap<>();
-           ModelAndView model = new ModelAndView(template,"mash");
+           ModelAndView model = new ModelAndView(template,"home.hbs");
 
             return "Connection is OK!";
 
@@ -53,8 +53,22 @@ public class Main {
            return "Home";
        });
 
+        get("/test",(request, response)->{
+            HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
+            Map<String, Object> payload = new HashMap<>();
+            payload.put("test","test");
+            ModelAndView model = new ModelAndView(payload,"mash.hbs");
 
+            return engine.render(model);
 
+            }
+            );
+
+        get("/home",(request, response)->{
+
+            return new ModelAndView(new HashMap<>(),"home.hbs");
+
+                },new HandlebarsTemplateEngine());
 
     }
 }
