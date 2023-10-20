@@ -12,7 +12,7 @@ public class Hero {
     }
 
     public Hero(int id, String name, int age, String power, String weakness) {
-        Id = id;
+        this.id = id;
         this.name = name;
         this.age = age;
         this.power = power;

@@ -1,6 +1,6 @@
 package com.moringaschool.student;
 
-import com.moringaschool.student.config.DatabaseConfig;
+import com.moringaschool.student.config.DBConfig;
 import org.sql2o.Connection;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -17,59 +17,31 @@ public class App {
 
     public static void main(String[] args) {
         staticFileLocation("/public");
-         Connection connection = DatabaseConfig.getConnection();
-//        Sql2o sql2o = DatabaseConfig.getDatabase();
+         Connection connection = DBConfig.getConnection();
 
-       get("/hello",(request, response)->{
+
+       get("/",(request, response)->{
            HandlebarsTemplateEngine template = new HandlebarsTemplateEngine();
            Map<String, Object> payload = new HashMap<>();
            ModelAndView model = new ModelAndView(payload,"home.hbs");
+           return template.render(model);});
 
-//            return "Connection is OK!";
-return template.render(model);
-
-
-//  return "Hello World!";
-
-
-
-       });
-
-       get("/",(request,response)->{
-           return "Home";
-       });
-
-        get("/test",(request, response)->{
+        get("/hero",(request, response)->{
             HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
             Map<String, Object> payload = new HashMap<>();
-            payload.put("test","test");
-            ModelAndView model = new ModelAndView(payload,"mash.hbs");
+            payload.put("hero","hero:Spider Man");
+            ModelAndView model = new ModelAndView(payload,"hero.hbs");
+            return engine.render(model);});
 
-            return engine.render(model);
-
-            }
-            );
-
-        get("/home",(request, response)->{
-            if(connection!=null){
-
+        get("/squad",(request, response)->{
                 Map<String, Object> payload =new HashMap<>();
                 List<String> list = new ArrayList<>();
-                list.add("Eliud");
-                list.add("Ann");
-                list.add("Andrew");
-                list.add("Ken");
-                list.add("Kennedy");
-                list.add("Peris");
-                payload.put("user",list);
-                return new ModelAndView(payload,"home.hbs");
-            }
-            else{
-
-                return new ModelAndView(new HashMap<>(),"error.hbs");
-            }
-
-
+                list.add("id:1");
+                list.add("Squad One");
+                list.add("Size: 10");
+                list.add("Cause");
+                payload.put("squad",list);
+                return new ModelAndView(payload,"squad.hbs");
                 },new HandlebarsTemplateEngine());
 
     }
