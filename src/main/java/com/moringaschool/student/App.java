@@ -16,6 +16,7 @@ public class App {
 
 
     public static void main(String[] args) {
+        staticFileLocation("/public");
          Connection connection = DatabaseConfig.getConnection();
 //        Sql2o sql2o = DatabaseConfig.getDatabase();
 
