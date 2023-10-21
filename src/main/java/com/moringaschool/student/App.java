@@ -1,6 +1,7 @@
 package com.moringaschool.student;
 
 import com.moringaschool.student.config.DBConfig;
+import com.moringaschool.student.hero.Hero;
 import com.moringaschool.student.squad.Squad;
 import org.sql2o.Connection;
 import spark.ModelAndView;
@@ -109,6 +110,14 @@ public class App {
                         .addParameter("weakness",weakness)
                         .executeUpdate();
                 return new ModelAndView(payload, "hero.hbs");
+            }, new HandlebarsTemplateEngine());
+
+            get("/hero/all", (request, response) -> {
+                Map<String, Object> payload = new HashMap<>();
+                final String query = "SELECT * FROM hero";
+                List<Hero> heroes= connection.createQuery(query).executeAndFetch(Hero.class);
+                payload.put("heroes", heroes);
+                return new ModelAndView(payload, "all-hero.hbs");
             }, new HandlebarsTemplateEngine());
         }
 
