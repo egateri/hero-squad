@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import static spark.Spark.*;
 
 public class App {
@@ -28,7 +27,6 @@ public class App {
                 return engine.render(model);
             });
 
-
             get("/squad", (request, response) -> {
                 Map<String, Object> payload = new HashMap<>();
                 List<String> list = new ArrayList<>();
@@ -42,8 +40,6 @@ public class App {
 
             get("/squad/new", (request, response) -> {
                 Map<String, Object> payload = new HashMap<>();
-                List<String> list = new ArrayList<>();
-                payload.put("squad", list);
                 return new ModelAndView(payload, "create-squad.hbs");
             }, new HandlebarsTemplateEngine());
 
@@ -58,14 +54,13 @@ public class App {
                 list.add(maxSize);
                 list.add(cause);
                 payload.put("squad", list);
-                final String query = "INSERT INTO squad (id,name,size,cause) VALUES(Default,:name,:size,:cause)";
+                final String query = "INSERT INTO squad (name,size,cause) VALUES (:name,:size,:cause)";
                 connection.createQuery(query)
                         .addParameter("name",name)
                         .addParameter("size",size)
                         .addParameter("cause",cause)
                         .executeUpdate();
                 return new ModelAndView(payload, "squad.hbs");
-
             }, new HandlebarsTemplateEngine());
 
             get("/squad/all", (request, response) -> {
@@ -85,8 +80,6 @@ public class App {
 
             get("/hero/new", (request, response) -> {
                 Map<String, Object> payload = new HashMap<>();
-                List<String> list = new ArrayList<>();
-                payload.put("squad", list);
                 return new ModelAndView(payload, "create-hero.hbs");
             }, new HandlebarsTemplateEngine());
             post("/hero/new", (request, response) -> {
@@ -96,13 +89,13 @@ public class App {
                 String ageAsString = request.queryParams("age");
                 Integer age = Integer.parseInt(ageAsString);
                 String power = request.queryParams("power");
-                String weakness = request.queryParams("power");
+                String weakness = request.queryParams("weakness");
                 list.add(name);
                 list.add(ageAsString);
                 list.add(power);
                 list.add(weakness);
                 payload.put("hero", list);
-                final String query = "INSERT INTO hero (id,name,age,power,weakness) VALUES (Default,:name,:age,:power,:weakness)";
+                final String query = "INSERT INTO hero (name,age,power,weakness) VALUES (:name,:age,:power,:weakness)";
                 connection.createQuery(query)
                         .addParameter("name",name)
                         .addParameter("age",age)
@@ -129,7 +122,6 @@ public class App {
                 return engine.render(model);
             });
         }
-
 
     }
 }

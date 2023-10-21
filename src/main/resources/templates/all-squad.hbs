@@ -19,21 +19,20 @@
     </div>
     <div class="row">
       <div class="left-column">
-        <div class="field">
-          <h3>Squad</h3>
-          <p>Attributes of a Squad:</p>
-          <ul>
-            <li>Id</li>
-            <li>Name</li>
-            <li>Size</li>
-            <li>Cause</li>
-          </ul>
-          <p>Squad : {{squads}}</p>
-        </div>
       </div>
       <div class="right-column">
         <div class="field">
-          <h3>Squad</h3>
+
+          <h3>All Squads</h3>
+                      {{#each squads}}
+                             <div class="hero">
+                              <hr>
+                               <p>Squad Id: {{id}}</p>
+                               <p>Squad Name: {{name}}</p>
+                               <p>Squad Size: {{size}}</p>
+                               <p>Squad Cause: {{cause}}</p>
+                             </div>
+                           {{/each}}
           <img
             src="/images/boy-hero.jpg"
             alt="image not found"

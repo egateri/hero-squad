@@ -68,21 +68,22 @@ body {
 
 /* Image style */
 img {
-  width: 100%;
+  width: 70%;
   height: auto;
+  align: center;
   background-repeat: no-repeat;
 }
 
 /* Left column */
 .left-column {
   float: left;
-  width: 60%;
+  width: 1%;
 }
 
 /* Right column */
 .right-column {
   float: left;
-  width: 40%;
+  width: 99%;
   padding-left: 20px;
 }
 
