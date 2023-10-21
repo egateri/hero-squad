@@ -1,4 +1,4 @@
-FROM gradle:4.7.0-jdk8-alpine AS build
+FROM gradle:8.4.0-jdk11-alpine AS build
 
 MAINTAINER  Eliud Gateri <egateri@gmail.com>
 
@@ -6,11 +6,11 @@ COPY --chown=gradle:gradle . /home/gradle/src
 
 WORKDIR /home/gradle/src
 
-RUN gradle build --no-daemon
+#RUN gradle build --no-daemon
 
-#RUN ./gradlew build
+RUN ./gradlew build
 
-FROM openjdk:8-jre-slim
+FROM openjdk:11-jre-slim
 
 ENV TZ=Africa/Nairobi
 
