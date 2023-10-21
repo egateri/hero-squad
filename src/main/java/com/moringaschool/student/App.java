@@ -29,12 +29,6 @@ public class App {
 
             get("/squad", (request, response) -> {
                 Map<String, Object> payload = new HashMap<>();
-                List<String> list = new ArrayList<>();
-                list.add("id:1");
-                list.add("Squad One");
-                list.add("Size: 10");
-                list.add("Cause");
-                payload.put("squad", list);
                 return new ModelAndView(payload, "squad.hbs");
             }, new HandlebarsTemplateEngine());
 
