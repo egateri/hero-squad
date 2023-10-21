@@ -6,7 +6,9 @@ COPY --chown=gradle:gradle . /home/gradle/src
 
 WORKDIR /home/gradle/src
 
-RUN gradle build --no-daemon
+#RUN gradlew build --no-daemon
+
+RUN ./gradlew build
 
 FROM openjdk:11-jre-slim
 
