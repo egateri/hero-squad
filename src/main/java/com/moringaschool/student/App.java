@@ -4,7 +4,6 @@ import com.moringaschool.student.config.DBConfig;
 import org.sql2o.Connection;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,15 +20,14 @@ public class App {
 
 
        get("/",(request, response)->{
-           HandlebarsTemplateEngine template = new HandlebarsTemplateEngine();
+           HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
            Map<String, Object> payload = new HashMap<>();
            ModelAndView model = new ModelAndView(payload,"home.hbs");
-           return template.render(model);});
+           return engine.render(model);});
 
         get("/hero",(request, response)->{
             HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
             Map<String, Object> payload = new HashMap<>();
-            payload.put("hero","hero:Spider Man");
             ModelAndView model = new ModelAndView(payload,"hero.hbs");
             return engine.render(model);});
 
@@ -44,18 +42,14 @@ public class App {
                 return new ModelAndView(payload,"squad.hbs");
                 },new HandlebarsTemplateEngine());
 
-        get("/create-squad",(request, response)->{
+        get("/squad/new",(request, response)->{
             Map<String, Object> payload =new HashMap<>();
             List<String> list = new ArrayList<>();
-            list.add("id:1");
-            list.add("Squad One");
-            list.add("Size: 10");
-            list.add("Cause");
             payload.put("squad",list);
             return new ModelAndView(payload,"create-squad.hbs");
         },new HandlebarsTemplateEngine());
 
-        post("/create-squad",(request, response)->{
+        post("/squad/new",(request, response)->{
             Map<String, Object> payload =new HashMap<>();
             List<String> list = new ArrayList<>();
             String name = request.queryParams("name");
@@ -66,6 +60,26 @@ public class App {
             list.add(cause);
             payload.put("squad",list);
             return new ModelAndView(payload,"squad.hbs");
+        },new HandlebarsTemplateEngine());
+        get("/hero/new",(request, response)->{
+            Map<String, Object> payload =new HashMap<>();
+            List<String> list = new ArrayList<>();
+            payload.put("squad",list);
+            return new ModelAndView(payload,"create-hero.hbs");
+        },new HandlebarsTemplateEngine());
+        post("/hero/new",(request, response)->{
+            Map<String, Object> payload =new HashMap<>();
+            List<String> list = new ArrayList<>();
+            String name = request.queryParams("name");
+            String age= request.queryParams("age");
+            String power = request.queryParams("power");
+            String weakness = request.queryParams("power");
+            list.add(name);
+            list.add(age);
+            list.add(power);
+            list.add(weakness);
+            payload.put("hero",list);
+            return new ModelAndView(payload,"hero.hbs");
         },new HandlebarsTemplateEngine());
 
     }
