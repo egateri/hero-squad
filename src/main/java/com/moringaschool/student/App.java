@@ -18,69 +18,102 @@ public class App {
         staticFileLocation("/public");
          Connection connection = DBConfig.getConnection();
 
+        if(connection!=null) {
+            get("/", (request, response) -> {
+                HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
+                Map<String, Object> payload = new HashMap<>();
+                ModelAndView model = new ModelAndView(payload, "home.hbs");
+                return engine.render(model);
+            });
 
-       get("/",(request, response)->{
-           HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
-           Map<String, Object> payload = new HashMap<>();
-           ModelAndView model = new ModelAndView(payload,"home.hbs");
-           return engine.render(model);});
 
-        get("/hero",(request, response)->{
-            HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
-            Map<String, Object> payload = new HashMap<>();
-            ModelAndView model = new ModelAndView(payload,"hero.hbs");
-            return engine.render(model);});
-
-        get("/squad",(request, response)->{
-                Map<String, Object> payload =new HashMap<>();
+            get("/squad", (request, response) -> {
+                Map<String, Object> payload = new HashMap<>();
                 List<String> list = new ArrayList<>();
                 list.add("id:1");
                 list.add("Squad One");
                 list.add("Size: 10");
                 list.add("Cause");
-                payload.put("squad",list);
-                return new ModelAndView(payload,"squad.hbs");
-                },new HandlebarsTemplateEngine());
+                payload.put("squad", list);
+                return new ModelAndView(payload, "squad.hbs");
+            }, new HandlebarsTemplateEngine());
 
-        get("/squad/new",(request, response)->{
-            Map<String, Object> payload =new HashMap<>();
-            List<String> list = new ArrayList<>();
-            payload.put("squad",list);
-            return new ModelAndView(payload,"create-squad.hbs");
-        },new HandlebarsTemplateEngine());
+            get("/squad/new", (request, response) -> {
+                Map<String, Object> payload = new HashMap<>();
+                List<String> list = new ArrayList<>();
+                payload.put("squad", list);
+                return new ModelAndView(payload, "create-squad.hbs");
+            }, new HandlebarsTemplateEngine());
 
-        post("/squad/new",(request, response)->{
-            Map<String, Object> payload =new HashMap<>();
-            List<String> list = new ArrayList<>();
-            String name = request.queryParams("name");
-            String maxSize = request.queryParams("maxSize");
-            String cause = request.queryParams("cause");
-            list.add(name);
-            list.add(maxSize);
-            list.add(cause);
-            payload.put("squad",list);
-            return new ModelAndView(payload,"squad.hbs");
-        },new HandlebarsTemplateEngine());
-        get("/hero/new",(request, response)->{
-            Map<String, Object> payload =new HashMap<>();
-            List<String> list = new ArrayList<>();
-            payload.put("squad",list);
-            return new ModelAndView(payload,"create-hero.hbs");
-        },new HandlebarsTemplateEngine());
-        post("/hero/new",(request, response)->{
-            Map<String, Object> payload =new HashMap<>();
-            List<String> list = new ArrayList<>();
-            String name = request.queryParams("name");
-            String age= request.queryParams("age");
-            String power = request.queryParams("power");
-            String weakness = request.queryParams("power");
-            list.add(name);
-            list.add(age);
-            list.add(power);
-            list.add(weakness);
-            payload.put("hero",list);
-            return new ModelAndView(payload,"hero.hbs");
-        },new HandlebarsTemplateEngine());
+            post("/squad/new", (request, response) -> {
+                Map<String, Object> payload = new HashMap<>();
+                List<String> list = new ArrayList<>();
+                String name = request.queryParams("name");
+                String maxSize = request.queryParams("maxSize");
+                Integer size = Integer.parseInt(maxSize);
+                String cause = request.queryParams("cause");
+                list.add(name);
+                list.add(maxSize);
+                list.add(cause);
+                payload.put("squad", list);
+                final String query = "INSERT INTO squad (id,name,size,cause) VALUES(Default,:name,:size,:cause)";
+                connection.createQuery(query)
+                        .addParameter("name",name)
+                        .addParameter("size",size)
+                        .addParameter("cause",cause)
+                        .executeUpdate();
+                return new ModelAndView(payload, "squad.hbs");
+
+            }, new HandlebarsTemplateEngine());
+
+
+
+            get("/hero", (request, response) -> {
+                HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
+                Map<String, Object> payload = new HashMap<>();
+                ModelAndView model = new ModelAndView(payload, "hero.hbs");
+                return engine.render(model);
+            });
+
+            get("/hero/new", (request, response) -> {
+                Map<String, Object> payload = new HashMap<>();
+                List<String> list = new ArrayList<>();
+                payload.put("squad", list);
+                return new ModelAndView(payload, "create-hero.hbs");
+            }, new HandlebarsTemplateEngine());
+            post("/hero/new", (request, response) -> {
+                Map<String, Object> payload = new HashMap<>();
+                List<String> list = new ArrayList<>();
+                String name = request.queryParams("name");
+                String ageAsString = request.queryParams("age");
+                Integer age = Integer.parseInt(ageAsString);
+                String power = request.queryParams("power");
+                String weakness = request.queryParams("power");
+                list.add(name);
+                list.add(ageAsString);
+                list.add(power);
+                list.add(weakness);
+                payload.put("hero", list);
+                final String query = "INSERT INTO hero (id,name,age,power,weakness) VALUES (Default,:name,:age,:power,:weakness)";
+                connection.createQuery(query)
+                        .addParameter("name",name)
+                        .addParameter("age",age)
+                        .addParameter("power",power)
+                        .addParameter("weakness",weakness)
+                        .executeUpdate();
+                return new ModelAndView(payload, "hero.hbs");
+            }, new HandlebarsTemplateEngine());
+        }
+
+        else{
+            get("*", (request, response) -> {
+                HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
+                Map<String, Object> payload = new HashMap<>();
+                ModelAndView model = new ModelAndView(payload, "error.hbs");
+                return engine.render(model);
+            });
+        }
+
 
     }
 }

@@ -115,3 +115,8 @@ img {
 h3 {
   color: green;
 }
+
+.marquee {
+  color: red;
+  font-size:30px;
+}
