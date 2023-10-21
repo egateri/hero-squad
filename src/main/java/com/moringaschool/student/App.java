@@ -1,6 +1,7 @@
 package com.moringaschool.student;
 
 import com.moringaschool.student.config.DBConfig;
+import com.moringaschool.student.squad.Squad;
 import org.sql2o.Connection;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -66,7 +67,13 @@ public class App {
 
             }, new HandlebarsTemplateEngine());
 
-
+            get("/squad/all", (request, response) -> {
+                Map<String, Object> payload = new HashMap<>();
+                final String query = "SELECT * FROM squad";
+               List<Squad> squads = connection.createQuery(query).executeAndFetch(Squad.class);
+                payload.put("squads", squads);
+                return new ModelAndView(payload, "all-squad.hbs");
+            }, new HandlebarsTemplateEngine());
 
             get("/hero", (request, response) -> {
                 HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
