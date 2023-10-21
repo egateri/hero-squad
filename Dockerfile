@@ -10,7 +10,7 @@ WORKDIR /home/gradle/src
 
 RUN ./gradlew build
 
-FROM openjdk:11-jre-slim
+FROM openjdk:8-jre-slim
 
 ENV TZ=Africa/Nairobi
 
