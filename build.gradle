@@ -2,11 +2,11 @@ plugins {
     id 'java'
 }
 
-jar {
-    manifest{
-        attributes'Main-Class':'com.moringaschool.student.App'
-    }
-}
+//jar {
+//    manifest{
+//        attributes'Main-Class':'com.moringaschool.student.App'
+//    }
+//}
 
 group = 'com.moringaschool.student'
 version = '1.0-SNAPSHOT'
