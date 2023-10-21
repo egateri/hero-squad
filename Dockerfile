@@ -6,9 +6,9 @@ COPY --chown=gradle:gradle . /home/gradle/src
 
 WORKDIR /home/gradle/src
 
-#RUN gradlew build --no-daemon
+RUN gradle build --no-daemon
 
-RUN ./gradlew build
+#RUN ./gradlew build
 
 FROM openjdk:8-jre-slim
 
