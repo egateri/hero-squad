@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+ <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Squad Page</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+<body>
+  <div class="header">
+      <h1>Hero Squad</h1>
+      <p>My Hero Squads Program.</p>
+   </div>
+   <div class="navigation">
+      <a href="/">Home</a>
+      <a href="/hero">Hero</a>
+      <a href="/squad">Squad</a>
+   </div>
+    <h2 class="text-center mb-4 mt-5">Create your Squad!</h2>
+    <div class="container mt-5 offset-sm-2 pt-3 pb-3">
+        <div class="row">
+            <div class="col offset-sm-2">
+                <form action="/create-squad" method="POST">
+                    <div class="row mb-3">
+                        <label for="name" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control w-50" id="name" name="name" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="maxSize" class="col-sm-2 col-form-label">Max Size</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control w-50" id="maxSize" name="maxSize" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="cause" class="col-sm-2 col-form-label">Cause</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control w-50" id="maxSize" name="cause" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-default">Create a Squad</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

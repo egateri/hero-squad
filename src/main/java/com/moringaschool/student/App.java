@@ -44,5 +44,29 @@ public class App {
                 return new ModelAndView(payload,"squad.hbs");
                 },new HandlebarsTemplateEngine());
 
+        get("/create-squad",(request, response)->{
+            Map<String, Object> payload =new HashMap<>();
+            List<String> list = new ArrayList<>();
+            list.add("id:1");
+            list.add("Squad One");
+            list.add("Size: 10");
+            list.add("Cause");
+            payload.put("squad",list);
+            return new ModelAndView(payload,"create-squad.hbs");
+        },new HandlebarsTemplateEngine());
+
+        post("/create-squad",(request, response)->{
+            Map<String, Object> payload =new HashMap<>();
+            List<String> list = new ArrayList<>();
+            String name = request.queryParams("name");
+            String maxSize = request.queryParams("maxSize");
+            String cause = request.queryParams("cause");
+            list.add(name);
+            list.add(maxSize);
+            list.add(cause);
+            payload.put("squad",list);
+            return new ModelAndView(payload,"squad.hbs");
+        },new HandlebarsTemplateEngine());
+
     }
 }
