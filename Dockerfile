@@ -30,6 +30,7 @@ ENV ARTIFACT_NAME=herosquad-1.0-SNAPSHOT.jar
 ENV APP_HOME=/usr/app/
 
 WORKDIR $APP_HOME
+
 COPY --from=Build $APP_HOME/build/libs/$ARTIFACT_NAME .
 
 ENV TZ=Africa/Nairobi
@@ -38,4 +39,5 @@ EXPOSE 4567
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ENTRYPOINT exec java -jar ${ARTIFACT_NAME}
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-jar","/usr/app/herosquad-1.0-SNAPSHOT.jar"]
