@@ -2,13 +2,18 @@ FROM gradle:8.4.0-jdk11-alpine AS build
 
 MAINTAINER  Eliud Gateri <egateri@gmail.com>
 
-COPY --chown=gradle:gradle . /home/gradle/src
+RUN mkdir /home/gradle/src
 
 WORKDIR /home/gradle/src
 
-#RUN gradle build --no-daemon
+COPY build.gradle .
+COPY settings.gradle .
+COPY gradlew .
+COPY gradle/ ./gradle/
 
-RUN ./gradlew build
+RUN gradle clean
+
+RUN gradle build
 
 FROM openjdk:11-jre-slim
 
