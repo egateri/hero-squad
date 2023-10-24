@@ -16,9 +16,9 @@ USER root
 
 RUN chown -R gradle /home/gradle/src
 
-RUN gradle build || return 0
+#RUN gradle build || return 0
 
-COPY . .
+#COPY . .
 
 RUN gradle clean build
 
