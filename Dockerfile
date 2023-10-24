@@ -11,7 +11,7 @@ COPY gradlew .
 COPY gradle/ ./gradle/
 RUN ./gradlew build
 
-COPY build/libs/herosquad-1.0-SNAPSHOT.jar /app/herosquad-1.0-SNAPSHOT.jar
+COPY build/libs/*.jar /app/herosquad-1.0-SNAPSHOT.jar
 
 EXPOSE 4567
 
