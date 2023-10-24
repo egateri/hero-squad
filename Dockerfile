@@ -1,36 +1,28 @@
-FROM gradle:8.4.0-jdk11-alpine AS Build
+FROM gradle:8.4.0-jdk11-alpine AS build
 
 MAINTAINER  Eliud Gateri <egateri@gmail.com>
 
-ENV APP_HOME=/usr/app/
-
-WORKDIR $APP_HOME
-
-COPY build.gradle settings.gradle $APP_HOME
-
-COPY gradle $APP_HOME/gradle
-
 COPY --chown=gradle:gradle . /home/gradle/src
 
-USER root
+WORKDIR /home/gradle/src
 
-RUN chown -R gradle /home/gradle/src
+#RUN gradle build --no-daemon
 
+RUN ./gradlew build
 
 FROM openjdk:11-jre-slim
-
-ENV ARTIFACT_NAME=herosquad-1.0-SNAPSHOT.jar
-
-ENV APP_HOME=/usr/app/
-
-WORKDIR $APP_HOME
-
-COPY --from=Build $APP_HOME/build/libs/$ARTIFACT_NAME .
 
 ENV TZ=Africa/Nairobi
 
 EXPOSE 4567
 
+RUN mkdir /app
+
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/herosquad-1.0-SNAPSHOT.jar
+
+RUN /bin/sh -c 'touch /app/herosquad-1.0-SNAPSHOT.jar'
+
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ENTRYPOINT exec java -jar ${ARTIFACT_NAME}
+#ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/herosquad-1.0-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/herosquad-1.0-SNAPSHOT.jar"]
