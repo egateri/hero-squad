@@ -9,9 +9,9 @@ jar {
                 'Main-Class':'com.moringaschool.student.App'
         )
     }
-    from {
-        configurations.compileClasspath.filter{ it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+//    from {
+//        configurations.compileClasspath.filter{ it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
+//    }
 }
 
 
