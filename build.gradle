@@ -25,10 +25,12 @@ version = '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
-
+tasks.withType(Jar){
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+//    testImplementation platform('org.junit:junit-bom:5.9.1')
+//    testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation group: 'com.sparkjava', name: 'spark-core',version:'2.9.4'
     implementation group:'com.sparkjava', name: 'spark-template-handlebars',version: '2.7.1'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
@@ -38,5 +40,5 @@ dependencies {
 }
 
 test {
-    useJUnitPlatform()
+//    useJUnitPlatform()
 }

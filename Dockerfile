@@ -11,9 +11,9 @@ COPY settings.gradle .
 COPY gradlew .
 COPY gradle/ ./gradle/
 
-RUN gradle clean
+#RUN gradle clean
 
-RUN gradle build
+RUN gradle clean build
 
 FROM openjdk:11-jre-slim
 
