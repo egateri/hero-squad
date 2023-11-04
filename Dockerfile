@@ -1,21 +1,20 @@
-FROM gradle:8.4.0-jdk11-alpine AS build
+FROM amazoncorretto:17-al2-jdk
 
 MAINTAINER  Eliud Gateri <egateri@gmail.com>
 
-RUN mkdir /home/gradle/src
-
-WORKDIR /home/gradle/src
+USER root
 
 COPY build.gradle .
+
 COPY settings.gradle .
+
 COPY gradlew .
+
 COPY gradle/ ./gradle/
 
-#RUN gradle clean
+#RUN yum update -y --security
 
-RUN gradle clean build
-
-FROM openjdk:11-jre-slim
+RUN ./gradlew build
 
 ENV TZ=Africa/Nairobi
 
@@ -23,7 +22,7 @@ EXPOSE 4567
 
 RUN mkdir /app
 
-COPY --from=build /home/gradle/src/build/libs/*.jar /app/herosquad-1.0-SNAPSHOT.jar
+COPY /build/libs/*.jar /app/herosquad-1.0-SNAPSHOT.jar
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
