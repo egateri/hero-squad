@@ -12,6 +12,7 @@ Hero Squad
 
 ### Live Link
 
+https://hero-squad-service.onrender.com/
 
 ### BDD
 As a user, I would like to;
