@@ -8,9 +8,7 @@ WORKDIR /usr/app/
 
 COPY . .
 
-RUN gradle clean -debug
-
-RUN gradle build -debug
+RUN ./gradlew build
 
 FROM amazoncorretto:21-alpine-jdk
 
