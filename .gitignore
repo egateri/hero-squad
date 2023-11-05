@@ -44,3 +44,4 @@ bin/
 
 ###ENVIRONMENT VARIABLES
 .env
+env.sh

@@ -14,11 +14,12 @@ public class DBConfig {
         String DB_DATABASE =env.get("DB_DATABASE");
         String DB_PASSWORD =env.get("DB_PASSWORD");
         String DB_PORT =env.get("DB_PORT");
-                for (String envName : env.keySet()) {
-            System.out.format("%s=%s%n", envName,
-                    env.get(envName));
-        }
+
+        //ONLINE DATABASE - INTERNET
         Sql2o sql2o = new Sql2o("jdbc:postgresql://"+DB_HOST+":"+DB_PORT+"/"+DB_DATABASE,DB_USER,DB_PASSWORD);
+
+        //LOCAL DATABASE
+//        Sql2o sql2o = new Sql2o("jdbc:postgresql://localhost:5432/herosquad","postgres","postgres");
 
         try(Connection connection= sql2o.open()){
             System.out.println("SUCCESS "+connection.toString());
