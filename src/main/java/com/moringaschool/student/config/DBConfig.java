@@ -11,7 +11,7 @@ public class DBConfig {
         Map<String, String> env = System.getenv();
         String DB_HOST =env.get("DB_HOST");
         String DB_USER =env.get("DB_USER");
-        String DB_DATABASE =env.get("DB_USER");
+        String DB_DATABASE =env.get("DB_DATABASE");
         String DB_PASSWORD =env.get("DB_PASSWORD");
         String DB_PORT =env.get("DB_PORT");
                 for (String envName : env.keySet()) {
