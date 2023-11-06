@@ -20,6 +20,7 @@ dependencies {
     implementation group:'com.sparkjava', name: 'spark-template-handlebars',version: '2.7.1'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
     implementation group: 'org.sql2o', name: 'sql2o', version: '1.6.0'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.11'
 }
 test {
     useJUnitPlatform()
