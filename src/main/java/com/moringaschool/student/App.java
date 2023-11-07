@@ -3,27 +3,29 @@ package com.moringaschool.student;
 import com.moringaschool.student.config.DBConfig;
 import com.moringaschool.student.hero.Hero;
 import com.moringaschool.student.squad.Squad;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
+
 import static spark.Spark.*;
 
 public class App {
 
-
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
     public static void main(String[] args) {
         staticFileLocation("/public");
          Connection connection = DBConfig.getConnection();
-
-        if(connection!=null) {
+                 if(connection!=null) {
             get("/", (request, response) -> {
+                String requestRefId = UUID.randomUUID().toString();
                 HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
                 Map<String, Object> payload = new HashMap<>();
                 ModelAndView model = new ModelAndView(payload, "home.hbs");
+                logger.warn("requestRefId = "+requestRefId + " | statusCode = 200 | status = Success | message = visited home  |");
                 return engine.render(model);
             });
 
@@ -39,6 +41,7 @@ public class App {
 
             post("/squad/new", (request, response) -> {
                 Map<String, Object> payload = new HashMap<>();
+                String requestRefId = UUID.randomUUID().toString();
                 List<String> list = new ArrayList<>();
                 String name = request.queryParams("name");
                 String maxSize = request.queryParams("maxSize");
@@ -54,14 +57,17 @@ public class App {
                         .addParameter("size",size)
                         .addParameter("cause",cause)
                         .executeUpdate();
+                logger.warn("requestRefId = "+requestRefId + " | statusCode = 201  | status = created | message = New squad added  |");
                 return new ModelAndView(payload, "squad.hbs");
             }, new HandlebarsTemplateEngine());
 
             get("/squad/all", (request, response) -> {
                 Map<String, Object> payload = new HashMap<>();
+                String requestRefId = UUID.randomUUID().toString();
                 final String query = "SELECT * FROM squad";
                List<Squad> squads = connection.createQuery(query).executeAndFetch(Squad.class);
                 payload.put("squads", squads);
+                logger.warn("requestRefId = "+requestRefId + " | statusCode = 200  | status = OK | message = All squads retrieved  |");
                 return new ModelAndView(payload, "all-squad.hbs");
             }, new HandlebarsTemplateEngine());
 
@@ -76,8 +82,10 @@ public class App {
                 Map<String, Object> payload = new HashMap<>();
                 return new ModelAndView(payload, "create-hero.hbs");
             }, new HandlebarsTemplateEngine());
+
             post("/hero/new", (request, response) -> {
                 Map<String, Object> payload = new HashMap<>();
+                String requestRefId = UUID.randomUUID().toString();
                 List<String> list = new ArrayList<>();
                 String name = request.queryParams("name");
                 String ageAsString = request.queryParams("age");
@@ -96,23 +104,28 @@ public class App {
                         .addParameter("power",power)
                         .addParameter("weakness",weakness)
                         .executeUpdate();
+                logger.warn("requestRefId = "+requestRefId + " | statusCode = 201  | status = created | message = New hero added  |");
                 return new ModelAndView(payload, "hero.hbs");
             }, new HandlebarsTemplateEngine());
 
             get("/hero/all", (request, response) -> {
                 Map<String, Object> payload = new HashMap<>();
+                String requestRefId = UUID.randomUUID().toString();
                 final String query = "SELECT * FROM hero";
                 List<Hero> heroes= connection.createQuery(query).executeAndFetch(Hero.class);
                 payload.put("heroes", heroes);
+                logger.warn("requestRefId = "+requestRefId + " | statusCode = 200  | status = OK | message = All heroes retrieved  |");
                 return new ModelAndView(payload, "all-hero.hbs");
             }, new HandlebarsTemplateEngine());
         }
 
         else{
             get("*", (request, response) -> {
+                String requestRefId = UUID.randomUUID().toString();
                 HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
                 Map<String, Object> payload = new HashMap<>();
                 ModelAndView model = new ModelAndView(payload, "error.hbs");
+                logger.warn("requestRefId = "+requestRefId + " | statusCode = 500  | status = Internal Server Error | message = *** Please check Database connections *** |");
                 return engine.render(model);
             });
         }
