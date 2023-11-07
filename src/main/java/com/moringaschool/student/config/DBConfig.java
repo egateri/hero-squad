@@ -23,10 +23,10 @@ public class DBConfig {
         String requestRefId = UUID.randomUUID().toString();
 
         //ONLINE DATABASE - INTERNET
-//        Sql2o sql2o = new Sql2o("jdbc:postgresql://"+DB_HOST+":"+DB_PORT+"/"+DB_DATABASE,DB_USER,DB_PASSWORD);
+        Sql2o sql2o = new Sql2o("jdbc:postgresql://"+DB_HOST+":"+DB_PORT+"/"+DB_DATABASE,DB_USER,DB_PASSWORD);
 
         //LOCAL DATABASE
-        Sql2o sql2o = new Sql2o("jdbc:postgresql://localhost:5432/herosquad3","postgres","postgres");
+//        Sql2o sql2o = new Sql2o("jdbc:postgresql://localhost:5432/herosquad","postgres","postgres");
 
         try(Connection connection= sql2o.open()){
             logger.info("requestRefId = "+requestRefId + " | statusCode = 200 | status = Success | message = ** DB CONNECTION SUCCESS ** "+connection.toString()+"  |");
