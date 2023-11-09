@@ -25,7 +25,7 @@ public class App {
                 HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
                 Map<String, Object> payload = new HashMap<>();
                 ModelAndView model = new ModelAndView(payload, "home.hbs");
-                logger.warn("requestRefId = "+requestRefId + " | statusCode = 200 | status = Success | message = visited home  |");
+                logger.info("requestRefId = "+requestRefId + " | statusCode = 200  | status = OK | message = visited home  |");
                 return engine.render(model);
             });
 
@@ -57,7 +57,7 @@ public class App {
                         .addParameter("size",size)
                         .addParameter("cause",cause)
                         .executeUpdate();
-                logger.warn("requestRefId = "+requestRefId + " | statusCode = 201  | status = created | message = New squad added  |");
+                logger.info("requestRefId = "+requestRefId + " | statusCode = 201  | status = created | message = New squad added  |");
                 return new ModelAndView(payload, "squad.hbs");
             }, new HandlebarsTemplateEngine());
 
@@ -67,7 +67,7 @@ public class App {
                 final String query = "SELECT * FROM squad";
                List<Squad> squads = connection.createQuery(query).executeAndFetch(Squad.class);
                 payload.put("squads", squads);
-                logger.warn("requestRefId = "+requestRefId + " | statusCode = 200  | status = OK | message = All squads retrieved  |");
+                logger.info("requestRefId = "+requestRefId + " | statusCode = 200  | status = OK | message = All squads retrieved  |");
                 return new ModelAndView(payload, "all-squad.hbs");
             }, new HandlebarsTemplateEngine());
 
@@ -104,7 +104,7 @@ public class App {
                         .addParameter("power",power)
                         .addParameter("weakness",weakness)
                         .executeUpdate();
-                logger.warn("requestRefId = "+requestRefId + " | statusCode = 201  | status = created | message = New hero added  |");
+                logger.info("requestRefId = "+requestRefId + " | statusCode = 201  | status = created | message = New hero added  |");
                 return new ModelAndView(payload, "hero.hbs");
             }, new HandlebarsTemplateEngine());
 
@@ -114,7 +114,7 @@ public class App {
                 final String query = "SELECT * FROM hero";
                 List<Hero> heroes= connection.createQuery(query).executeAndFetch(Hero.class);
                 payload.put("heroes", heroes);
-                logger.warn("requestRefId = "+requestRefId + " | statusCode = 200  | status = OK | message = All heroes retrieved  |");
+                logger.info("requestRefId = "+requestRefId + " | statusCode = 200  | status = OK | message = All heroes retrieved  |");
                 return new ModelAndView(payload, "all-hero.hbs");
             }, new HandlebarsTemplateEngine());
         }
@@ -125,7 +125,7 @@ public class App {
                 HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
                 Map<String, Object> payload = new HashMap<>();
                 ModelAndView model = new ModelAndView(payload, "error.hbs");
-                logger.warn("requestRefId = "+requestRefId + " | statusCode = 500  | status = Internal Server Error | message = *** Please check Database connections *** |");
+                logger.error("requestRefId = "+requestRefId + " | statusCode = 500  | status = Internal Server Error | message = *** Please check Database connections *** |");
                 return engine.render(model);
             });
         }

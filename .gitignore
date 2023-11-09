@@ -45,3 +45,4 @@ bin/
 ###ENVIRONMENT VARIABLES
 .env
 env.sh
+myapp.log.
