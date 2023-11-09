@@ -1,6 +1,5 @@
 package com.moringaschool.student.config;
 
-import com.moringaschool.student.App;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
@@ -39,18 +38,15 @@ public class DBConfig {
          DB_PASSWORD ="postgres";
 
        }
-        //ONLINE DATABASE - INTERNET
         Sql2o sql2o = new Sql2o("jdbc:postgresql://"+DB_HOST+":"+DB_PORT+"/"+DB_DATABASE,DB_USER,DB_PASSWORD);
 
-        //LOCAL DATABASE
-//        Sql2o sql2o = new Sql2o("jdbc:postgresql://localhost:5432/herosquad","postgres","postgres");
 
         try(Connection connection= sql2o.open()){
-            logger.info("requestRefId = "+requestRefId + " | statusCode = 200 | status = Success | message = ** DB CONNECTION SUCCESS ** "+connection.toString()+"  |");
+            logger.info("requestRefId = "+requestRefId + " | statusCode = 200 | status = OK | message = ** DB CONNECTION SUCCESS ** "+connection.toString()+"  |");
             return connection;
         }
         catch(Exception exception){
-            logger.warn("requestRefId = "+requestRefId + " | statusCode = 500 | status = Internal Server Error | message = ** DB CONNECTION ERROR **  "+ exception.getLocalizedMessage()+"  |");
+            logger.warn("requestRefId = "+requestRefId + " | statusCode = 500 | status = Error | message = ** DB CONNECTION ERROR **  "+ exception.getLocalizedMessage()+"  |");
             return null;
         }
     }
