@@ -21,7 +21,7 @@ public class DBConfig {
         String DB_DATABASE;
         String DB_PASSWORD;
         String DB_PORT;
-        String DB_ENVIRONMENT =env.get("DB_ENVIRONMENT ");
+        String DB_ENVIRONMENT =env.get("DB_ENVIRONMENT");
         String requestRefId = UUID.randomUUID().toString();
 
       if(Objects.equals(DB_ENVIRONMENT, "PRODUCTION")){
